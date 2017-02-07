@@ -74,6 +74,15 @@ class LightSwift
     @backend.addAuthToken(account, authToken).then =>
       authToken
 
+  addAuthToken: (account, authToken) =>
+      return if !authToken
+
+      @backend.getAuthTokenAccount(authToken).then (existing) =>
+        return if existing?
+
+        @backend.addAuthToken(account, authToken).then =>
+          authToken
+
   authenticate: (user, key) =>
     return q(no) if not user? or not key?
 

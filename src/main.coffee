@@ -46,6 +46,11 @@ opts = require('optimist')
   .default('c', '')
   .string('c')
 
+  .describe('f', 'Force custom auth token')
+  .alias('f', 'authToken')
+  .default('f', null)
+  .string('f')
+
   .describe('b', 'Backend')
   .alias('b', 'backend')
   .default('b', 'memory')
@@ -93,6 +98,7 @@ swift = new LightSwift(options)
 swift.connect()
   .then(-> swift.addAccount(argv.account))
   .then(-> swift.addUser(argv.account, argv.username, argv.key))
+  .then(-> swift.addAuthToken(argv.account, argv.authToken))
   .then(->
     swift.addContainer(argv.account, argv.container) if argv.container
   )
